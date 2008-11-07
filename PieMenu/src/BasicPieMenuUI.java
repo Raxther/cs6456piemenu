@@ -6,6 +6,12 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.plaf.ComponentUI;
 
@@ -19,6 +25,12 @@ import javax.swing.plaf.ComponentUI;
  */
 public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 		MouseMotionListener, KeyListener {
+
+	private BufferedImage blueButton;
+
+	public BasicPieMenuUI() {
+		createImages();
+	}
 
 	/*
 	 * 
@@ -58,9 +70,17 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 	 * javax.swing.JComponent)
 	 */
 	public void paint(Graphics g, JComponent c) {
-		Graphics2D g2 = (Graphics2D)g;
-		g2.setColor(Color.BLACK);
-		g2.drawRect(0, 0, 20, 20);
+		Graphics2D g2 = (Graphics2D) g;
+		g2.drawImage(blueButton, 0, 0, null);
+	}
+
+	private void createImages() {
+		String filename = "resources/blue_button.png";
+		try {
+			InputStream in = getClass().getResourceAsStream(filename);
+			blueButton = ImageIO.read(in);
+		} catch (IOException e) {
+		}
 	}
 
 	@Override
