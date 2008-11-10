@@ -42,13 +42,14 @@ public class PieMenu extends JComponent implements ChangeListener {
 
 	public void updateUI() {
 		setUI((PieMenuUI) UIManager.getUI(this));
-		invalidate();
+		invalidate();		
 	}
 	
 	
 	@Override
 	public void stateChanged(ChangeEvent arg0) {
 		repaint();
+
 		
 	}
 
