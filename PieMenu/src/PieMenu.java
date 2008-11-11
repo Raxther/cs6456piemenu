@@ -24,10 +24,11 @@ public class PieMenu extends JComponent implements ChangeListener {
 	}
 	
 	private void buildMenuButtons() {
-		JButton button0 = new JButton("0");
-		JButton button45 = new JButton("45");
+		PieButton button0 = new PieButton();
+		//JButton button0 = new JButton("0");
+		//JButton button45 = new JButton("45");
 		this.add(button0);
-		button0.setBounds(250, 250, 40, 40);
+		button0.setBounds(250, 250, 200, 200);
 		
 	}
 
@@ -59,7 +60,6 @@ public class PieMenu extends JComponent implements ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent arg0) {
 		repaint();
-
 		
 	}
 
