@@ -1,3 +1,4 @@
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
@@ -18,7 +19,16 @@ public class PieMenu extends JComponent implements ChangeListener {
 	public PieMenu() {
 		pieMenuModel = new PieMenuModel();
 		setModel();
+		buildMenuButtons();
 		updateUI();
+	}
+	
+	private void buildMenuButtons() {
+		JButton button0 = new JButton("0");
+		JButton button45 = new JButton("45");
+		this.add(button0);
+		button0.setBounds(250, 250, 40, 40);
+		
 	}
 
 	public String getUIClassID() {
