@@ -1,3 +1,6 @@
+import java.awt.Dimension;
+
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
@@ -13,16 +16,17 @@ import javax.swing.event.ChangeListener;
  */
 public class PieButton extends JComponent implements ChangeListener {
 	
-	private PieMenuModel pieButtonModel;
+	private PieButtonModel pieButtonModel;
 	
 	public PieButton() {
-		pieButtonModel = new PieMenuModel();
+		pieButtonModel = new PieButtonModel();
 		setModel();
+		buildButton();
 		updateUI();
 	}
 
 	public String getUIClassID() {
-		return PieMenuUI.UI_CLASS_ID;
+		return PieButtonUI.UI_CLASS_ID;
 	}
 	
 	public void setModel() {
@@ -32,7 +36,7 @@ public class PieButton extends JComponent implements ChangeListener {
 		pieButtonModel.addChangeListener(this);
 	}
 	
-	public PieMenuModel getModel() {
+	public PieButtonModel getModel() {
 		return pieButtonModel;
 	}
 	
@@ -43,6 +47,13 @@ public class PieButton extends JComponent implements ChangeListener {
 	public void updateUI() {
 		setUI((PieButtonUI) UIManager.getUI(this));
 		invalidate();
+	}
+	
+	private void buildButton() {
+		JButton button = new JButton();
+		this.add(button);
+		button.setBounds(0, 0, 44, 44);
+		//this.setPreferredSize(new Dimension(44,44));
 	}
 	
 	
