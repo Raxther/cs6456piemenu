@@ -70,6 +70,7 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 	 */
 	public void paint(Graphics g, JComponent c) {
 		Graphics2D g2 = (Graphics2D) g;
+		((PieMenu)c).updateButtons();
 		int menuCenterX = (c.getWidth() / 2);
 		int menuCenterY = (c.getHeight() / 2);
 		paintCircle(g2, menuCenterX, menuCenterY);
