@@ -33,10 +33,11 @@ public class TestApp extends JFrame {
 		getContentPane().setLayout(new BorderLayout());
 		setBounds(100, 100, 500, 375);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-UIManager.put(PieMenuUI.UI_CLASS_ID, "BasicPieMenuUI");
-		PieMenu pieMenu = new PieMenu();		
-		//final JPanel panel = new JPanel();
+		UIManager.put(PieMenuUI.UI_CLASS_ID, "BasicPieMenuUI");
+		UIManager.put(PieButtonUI.UI_CLASS_ID, "BasicPieButtonUI");
+		PieMenu pieMenu = new PieMenu();
+		// final JPanel panel = new JPanel();
 		getContentPane().add(pieMenu, BorderLayout.CENTER);
-		
+
 	}
 }
