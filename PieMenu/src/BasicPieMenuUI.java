@@ -71,13 +71,16 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 	 */
 	public void paint(Graphics g, JComponent c) {
 		Graphics2D g2 = (Graphics2D) g;
-		paintCircle(g2);
-		g2.drawImage(blueButton, 0, 0, null);
+		int menuCenterX = (c.getWidth() / 2);
+		int menuCenterY = (c.getHeight() / 2);
+		paintCircle(g2, menuCenterX, menuCenterY);
+		g2.drawImage(blueButton, menuCenterX - (blueButton.getWidth() / 2),
+				menuCenterY - (blueButton.getHeight() / 2), null);
 	}
-	
-	private void paintCircle(Graphics2D g2) {
-		g2.setColor(Color.BLUE);
-		g2.fillOval(-50, -50, 100, 100);
+
+	private void paintCircle(Graphics2D g2, int x, int y) {
+		g2.setColor(Color.LIGHT_GRAY);
+		g2.fillOval(x-80, y-80, 160, 160);
 	}
 
 	private void createImages() {
