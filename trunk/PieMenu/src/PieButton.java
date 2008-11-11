@@ -19,6 +19,7 @@ public class PieButton extends JComponent implements ChangeListener {
 
 	private PieButtonModel pieButtonModel;
 	private JButton mainButton;
+	private int degree;
 
 	public PieButton() {
 		pieButtonModel = new PieButtonModel();
@@ -63,6 +64,10 @@ public class PieButton extends JComponent implements ChangeListener {
 
 		this.add(mainButton);
 		mainButton.setBounds(0, 0, 44, 44);
+	}
+	
+	public void setDegree(int d) {
+		degree = d;
 	}
 
 	@Override
