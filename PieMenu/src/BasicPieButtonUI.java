@@ -26,10 +26,10 @@ import javax.swing.plaf.ComponentUI;
 public class BasicPieButtonUI extends PieButtonUI implements MouseListener,
 		MouseMotionListener, KeyListener {
 
-	private BufferedImage blueButton;
+	//private BufferedImage blueButton;
 
 	public BasicPieButtonUI() {
-		createImages();
+		//createImages();
 	}
 
 	/*
@@ -70,10 +70,10 @@ public class BasicPieButtonUI extends PieButtonUI implements MouseListener,
 	 * javax.swing.JComponent)
 	 */
 	public void paint(Graphics g, JComponent c) {
-		Graphics2D g2 = (Graphics2D) g;
-		g2.drawImage(blueButton, 0, 0, null);
+		//Graphics2D g2 = (Graphics2D) g;
+		//g2.drawImage(blueButton, 0, 0, null);
 	}
-
+/*
 	private void createImages() {
 		String filename = "resources/blue_button.png";
 		try {
@@ -81,7 +81,7 @@ public class BasicPieButtonUI extends PieButtonUI implements MouseListener,
 			blueButton = ImageIO.read(in);
 		} catch (IOException e) {
 		}
-	}
+	}*/
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
