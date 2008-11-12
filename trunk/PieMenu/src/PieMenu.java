@@ -38,9 +38,27 @@ public class PieMenu extends JComponent implements ChangeListener {
 	}
 
 	public void updateButtons() {
-		//Testing button at angle 0
-		pieButtons[0].setBounds(this.getWidth() / 2 + 80,
-				this.getHeight() / 2 - 22, 200, 200);
+            double angularSpacing = (double)360/(double)pieButtons.length;
+            double currentAngle = 0;
+	     
+            //Calculate center, with offset
+            int centerX = (getWidth() / 2) - 22;
+            int centerY = (getHeight() / 2) - 22;
+            for(int i = 0; i < pieButtons.length; i++)
+            {
+                //Get current angles (in radians)
+                double currentXAngle = Math.cos(Math.toRadians(currentAngle));
+                double currentYAngle = Math.sin(Math.toRadians(currentAngle));
+                //Get current offset coordinates
+                double currentXCoordinate = 80 * currentXAngle;
+                double currentYCoordinate = 80 * currentYAngle;
+                //Position buttons around circle
+		pieButtons[i].setBounds(centerX + (int)currentXCoordinate, centerY - (int)currentYCoordinate, 200, 200);
+                currentAngle += angularSpacing;
+            }
+
+            
+   
 	}
 
 	public String getUIClassID() {
