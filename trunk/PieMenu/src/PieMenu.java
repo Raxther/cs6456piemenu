@@ -53,7 +53,7 @@ public class PieMenu extends JComponent implements ChangeListener {
                 double currentXCoordinate = 80 * currentXAngle;
                 double currentYCoordinate = 80 * currentYAngle;
                 //Position buttons around circle
-		pieButtons[i].setBounds(centerX + (int)currentXCoordinate, centerY - (int)currentYCoordinate, 200, 200);
+		pieButtons[i].setBounds(centerX + (int)currentXCoordinate, centerY - (int)currentYCoordinate, 45, 45);
                 currentAngle += angularSpacing;
             }
 
