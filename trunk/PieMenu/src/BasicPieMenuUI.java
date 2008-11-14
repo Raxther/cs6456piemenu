@@ -99,7 +99,7 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
+	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}

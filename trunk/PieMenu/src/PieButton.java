@@ -1,5 +1,5 @@
-import java.awt.Dimension;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -22,15 +22,19 @@ public class PieButton extends JComponent implements ChangeListener {
 	public JButton[] hierarchButtons;
 	private int degree;
 	private int leafNodes;
+	private PieMenu pieMenu;
+	private boolean isExpanded;
 
-	public PieButton(int nodes) {
+	public PieButton(PieMenu pie, int nodes) {
 		pieButtonModel = new PieButtonModel();
 		setModel();
 		buildButton();
+		pieMenu = pie;
 		leafNodes = nodes;
 		if (leafNodes > 0) {
 			addHierarchButtons(leafNodes);
 		}
+		setHierarchyVisible(false);
 		updateUI();
 	}
 
@@ -60,6 +64,7 @@ public class PieButton extends JComponent implements ChangeListener {
 
 	private void buildButton() {
 		mainButton = new JButton();
+		mainButton.addActionListener(new MainButtonListener());
 		mainButton.setIcon(new ImageIcon(getClass().getResource(
 				"resources/dark_blue_button.png")));
 		mainButton.setRolloverIcon(new ImageIcon(getClass().getResource(
@@ -88,6 +93,19 @@ public class PieButton extends JComponent implements ChangeListener {
 			hierarchButton.setBounds(0, 0, 44, 44);
 			hierarchButtons[i] = hierarchButton;
 		}
+	}
+
+	public void setHierarchyVisible(boolean show) {
+		if (leafNodes > 0) {
+			for (int i = 0; i < hierarchButtons.length; i++) {
+				hierarchButtons[i].setVisible(show);
+			}
+		}
+		isExpanded = show;
+	}
+
+	public boolean isExpanded() {
+		return isExpanded;
 	}
 
 	public void updateHierarchy() {
@@ -131,6 +149,13 @@ public class PieButton extends JComponent implements ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent arg0) {
 		repaint();
+	}
+
+	private class MainButtonListener implements ActionListener {
+		public void actionPerformed(final ActionEvent e) {
+			pieMenu.setHierarchyHidden();
+			setHierarchyVisible(true);
+		}
 	}
 
 }

@@ -1,6 +1,3 @@
-import java.awt.Point;
-
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
@@ -29,7 +26,7 @@ public class PieMenu extends JComponent implements ChangeListener {
 	private void buildMenuButtons() {
 		int d = 0;
 		for (int i = 0; i < pieButtons.length; i++) {
-			pieButtons[i] = new PieButton(2);
+			pieButtons[i] = new PieButton(this, 2);
 			pieButtons[i].setDegree(d);
 			for (int y = 0; y < pieButtons[i].hierarchButtons.length; y++) {
 				this.add(pieButtons[i].hierarchButtons[y]);
@@ -65,6 +62,14 @@ public class PieMenu extends JComponent implements ChangeListener {
 			pieButtons[i].updateHierarchy();
 		}
 
+	}
+	
+	public void setHierarchyHidden() {
+		for(int i = 0; i < pieButtons.length; i++) {
+			if(pieButtons[i].isExpanded()) {
+				pieButtons[i].setHierarchyVisible(false);
+			}
+		}
 	}
 
 	public String getUIClassID() {
