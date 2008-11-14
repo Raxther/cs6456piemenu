@@ -88,8 +88,7 @@ public class PieButton extends JComponent implements ChangeListener {
 			hierarchButton.setFocusPainted(false);
 			hierarchButton.setContentAreaFilled(false);
 			hierarchButton.setBorderPainted(false);
-
-			this.add(hierarchButton);
+			//this.add(hierarchButton);
 			hierarchButton.setBounds(0, 0, 44, 44);
 			hierarchButtons[i] = hierarchButton;
 		}

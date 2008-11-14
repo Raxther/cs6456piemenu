@@ -1,4 +1,8 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JComponent;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -15,12 +19,15 @@ public class PieMenu extends JComponent implements ChangeListener {
 
 	private PieMenuModel pieMenuModel;
 	private PieButton[] pieButtons = new PieButton[8];
+	private Timer buttonsTimer;
 
 	public PieMenu() {
+		buttonsTimer = new Timer(50, new ButtonsAnimListener());
 		pieMenuModel = new PieMenuModel();
 		setModel();
 		buildMenuButtons();
 		updateUI();
+		buttonsTimer.start();
 	}
 
 	private void buildMenuButtons() {
@@ -30,12 +37,10 @@ public class PieMenu extends JComponent implements ChangeListener {
 			pieButtons[i].setDegree(d);
 			for (int y = 0; y < pieButtons[i].hierarchButtons.length; y++) {
 				this.add(pieButtons[i].hierarchButtons[y]);
-				// To Add: action listener & stuff for setting hierarchical
-				// buttons visible on clicking the parent
-				// pieButtons[i].hierarchButtons[y].setVisible(false);
 			}
 			this.add(pieButtons[i]);
 			d += (360 / pieButtons.length);
+			pieButtons[i].setVisible(false);
 		}
 		updateButtons();
 	}
@@ -63,13 +68,17 @@ public class PieMenu extends JComponent implements ChangeListener {
 		}
 
 	}
-	
+
 	public void setHierarchyHidden() {
-		for(int i = 0; i < pieButtons.length; i++) {
-			if(pieButtons[i].isExpanded()) {
+		for (int i = 0; i < pieButtons.length; i++) {
+			if (pieButtons[i].isExpanded()) {
 				pieButtons[i].setHierarchyVisible(false);
 			}
 		}
+	}
+
+	private void setButtonVisible(int b) {
+		pieButtons[b].setVisible(true);
 	}
 
 	public String getUIClassID() {
@@ -100,6 +109,18 @@ public class PieMenu extends JComponent implements ChangeListener {
 	public void stateChanged(ChangeEvent arg0) {
 		repaint();
 
+	}
+
+	private class ButtonsAnimListener implements ActionListener {
+		int index = 0;
+		public void actionPerformed(final ActionEvent arg0) {
+			setButtonVisible(index);
+			if(index < pieButtons.length-1) {
+				index++;
+			} else {
+				buttonsTimer.stop();
+			}
+		}
 	}
 
 }
