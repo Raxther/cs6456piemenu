@@ -86,13 +86,12 @@ public class BasicPieButtonUI extends PieButtonUI implements MouseListener,
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
+	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-
+		//((PieButton)e.getComponent()).setHierarchyVisible(true);
 	}
 
 	@Override
@@ -104,7 +103,6 @@ public class BasicPieButtonUI extends PieButtonUI implements MouseListener,
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
