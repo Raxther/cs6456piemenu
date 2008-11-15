@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Arc2D;
 
 import javax.swing.JComponent;
 import javax.swing.Timer;
@@ -20,11 +21,15 @@ public class PieMenu extends JComponent implements ChangeListener {
 	private PieMenuModel pieMenuModel;
 	private PieButton[] pieButtons = new PieButton[8];
 	private Timer buttonsTimer;
+	
+	private Arc2D.Float arc;
 
 	public PieMenu() {
 		buttonsTimer = new Timer(50, new ButtonsAnimListener());
 		pieMenuModel = new PieMenuModel();
 		setModel();
+		arc = new Arc2D.Float(Arc2D.PIE); //ARC
+		updateArcs(this.getWidth()/2, this.getHeight()/2);
 		buildMenuButtons();
 		updateUI();
 		buttonsTimer.start();
@@ -52,6 +57,7 @@ public class PieMenu extends JComponent implements ChangeListener {
 		// Calculate center, with offset
 		int centerX = (getWidth() / 2) - 22;
 		int centerY = (getHeight() / 2) - 22;
+		
 		for (int i = 0; i < pieButtons.length; i++) {
 			// Get current angles (in radians)
 			double currentXAngle = Math.cos(Math.toRadians(currentAngle));
@@ -75,6 +81,16 @@ public class PieMenu extends JComponent implements ChangeListener {
 				pieButtons[i].setHierarchyVisible(false);
 			}
 		}
+	}
+	
+	public void updateArcs(int x, int y) {
+		arc.setFrame(x-80, y-80, 160, 160);
+		arc.setAngleStart(0);
+		arc.setAngleExtent(45);
+	}
+	
+	public Arc2D.Float getArc() {
+		return arc;
 	}
 
 	private void setButtonVisible(int b) {

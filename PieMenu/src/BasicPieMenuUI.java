@@ -70,17 +70,20 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 	 */
 	public void paint(Graphics g, JComponent c) {
 		Graphics2D g2 = (Graphics2D) g;
-		((PieMenu)c).updateButtons();
+		((PieMenu) c).updateButtons();
 		int menuCenterX = (c.getWidth() / 2);
 		int menuCenterY = (c.getHeight() / 2);
-		paintCircle(g2, menuCenterX, menuCenterY);
+		paintCircle(g2, c, menuCenterX, menuCenterY);
+		((PieMenu) c).updateArcs(menuCenterX, menuCenterY);
 		g2.drawImage(blueButton, menuCenterX - (blueButton.getWidth() / 2),
 				menuCenterY - (blueButton.getHeight() / 2), null);
 	}
 
-	private void paintCircle(Graphics2D g2, int x, int y) {
+	private void paintCircle(Graphics2D g2, JComponent c, int x, int y) {
 		g2.setColor(Color.LIGHT_GRAY);
-		g2.fillOval(x-80, y-80, 160, 160);
+		g2.fillOval(x - 80, y - 80, 160, 160);
+		g2.setColor(Color.ORANGE);
+		g2.fill(((PieMenu) c).getArc());
 	}
 
 	private void createImages() {
@@ -129,9 +132,10 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
+	public void mouseMoved(MouseEvent e) {
+		if (((PieMenu) (e.getComponent())).getArc().contains(e.getPoint())) {
+			System.out.println("Arc test");
+		}
 	}
 
 	@Override
