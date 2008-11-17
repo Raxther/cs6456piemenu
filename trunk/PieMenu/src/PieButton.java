@@ -131,6 +131,14 @@ public class PieButton extends JComponent implements ChangeListener {
                         {
                             currentHierarchAngle = -73.125; 
                         }
+                        else if(hierarchButtons.length == 7)
+                        {
+                            currentHierarchAngle = -74.0625; 
+                        }
+                        else if(hierarchButtons.length == 8)
+                        {
+                            currentHierarchAngle = -74.53125; 
+                        }
 			// Position hierarchical buttons
 			for (int y = 0; y < hierarchButtons.length; y++) {
 
@@ -146,8 +154,7 @@ public class PieButton extends JComponent implements ChangeListener {
 				double currentHierarchYAngle = Math.sin(Math.toRadians(this
 						.getDegree()
 						+ currentHierarchAngle));
-				// Get current offset coordinates (50 pixel maximum offset - for
-				// two buttons, otherwise need more)
+                                //Get current offset coordinates                
 				double currentHierarchXCoordinate = (60 + (hierarchButtons.length - 2) * 10) * currentHierarchXAngle;
 				double currentHierarchYCoordinate = (60 + (hierarchButtons.length - 2) * 10) * currentHierarchYAngle;
 				hierarchButtons[y].setBounds(parentButtonX
