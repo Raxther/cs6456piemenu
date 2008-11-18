@@ -21,11 +21,13 @@ public class PieMenu extends JComponent implements ChangeListener {
 	private PieMenuModel pieMenuModel;
 	private PieButton[] pieButtons = new PieButton[8];
 	private Timer buttonsTimer;
+	private double initAngle;
 	
 	private Arc2D.Float arc;
 
 	public PieMenu() {
 		buttonsTimer = new Timer(50, new ButtonsAnimListener());
+		initAngle = 0;
 		pieMenuModel = new PieMenuModel();
 		setModel();
 		arc = new Arc2D.Float(Arc2D.PIE); //ARC
@@ -52,7 +54,6 @@ public class PieMenu extends JComponent implements ChangeListener {
 
 	public void updateButtons() {
 		double angularSpacing = (double) 360 / (double) pieButtons.length;
-		double currentAngle = 0;
 
 		// Calculate center, with offset
 		int centerX = (getWidth() / 2) - 22;
@@ -60,15 +61,15 @@ public class PieMenu extends JComponent implements ChangeListener {
 		
 		for (int i = 0; i < pieButtons.length; i++) {
 			// Get current angles (in radians)
-			double currentXAngle = Math.cos(Math.toRadians(currentAngle));
-			double currentYAngle = Math.sin(Math.toRadians(currentAngle));
+			double currentXAngle = Math.cos(Math.toRadians(initAngle));
+			double currentYAngle = Math.sin(Math.toRadians(initAngle));
 			// Get current offset coordinates
 			double currentXCoordinate = 80 * currentXAngle;
 			double currentYCoordinate = 80 * currentYAngle;
 			// Position buttons around circle
 			pieButtons[i].setBounds(centerX + (int) currentXCoordinate, centerY
 					- (int) currentYCoordinate, 44, 44);
-			currentAngle += angularSpacing;
+			initAngle += angularSpacing;
 
 			pieButtons[i].updateHierarchy();
 		}
@@ -91,6 +92,11 @@ public class PieMenu extends JComponent implements ChangeListener {
 	
 	public Arc2D.Float getArc() {
 		return arc;
+	}
+	
+	public void changeInitAngle(double delta) {
+		initAngle = initAngle + delta;
+		updateButtons();
 	}
 
 	private void setButtonVisible(int b) {
