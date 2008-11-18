@@ -6,6 +6,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +25,7 @@ import javax.swing.plaf.ComponentUI;
  * 
  */
 public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
-		MouseMotionListener, KeyListener {
+		MouseMotionListener, MouseWheelListener, KeyListener {
 
 	private BufferedImage blueButton;
 
@@ -47,6 +49,7 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 		PieMenu pieMenu = (PieMenu) c;
 		pieMenu.addMouseListener(this);
 		pieMenu.addMouseMotionListener(this);
+		pieMenu.addMouseWheelListener(this);
 		pieMenu.addKeyListener(this);
 	}
 
@@ -154,6 +157,18 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		int notches = e.getWheelRotation();
+		if (notches < 0) {
+			//Wheel UP:
+			((PieMenu) (e.getComponent())).changeInitAngle(10);
+		} else {
+			//Wheel DOWN:
+			((PieMenu) (e.getComponent())).changeInitAngle(-10);
+		}
 	}
 
 }
