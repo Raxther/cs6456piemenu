@@ -40,7 +40,7 @@ public class PieMenu extends JComponent implements ChangeListener {
 	private void buildMenuButtons() {
 		int d = 0;
 		for (int i = 0; i < pieButtons.length; i++) {
-			pieButtons[i] = new PieButton(this, 2);
+			pieButtons[i] = new PieButton(this, 12);
 			pieButtons[i].setDegree(d);
 			for (int y = 0; y < pieButtons[i].hierarchButtons.length; y++) {
 				this.add(pieButtons[i].hierarchButtons[y]);
@@ -70,7 +70,6 @@ public class PieMenu extends JComponent implements ChangeListener {
 			pieButtons[i].setBounds(centerX + (int) currentXCoordinate, centerY
 					- (int) currentYCoordinate, 44, 44);
 			initAngle += angularSpacing;
-
 			pieButtons[i].updateHierarchy();
 		}
 
@@ -96,6 +95,13 @@ public class PieMenu extends JComponent implements ChangeListener {
 	
 	public void changeInitAngle(double delta) {
 		initAngle = initAngle + delta;
+                //Update degree for hierarchical buttons
+                for(int i = 0; i< pieButtons.length; i++ )
+                {
+                    int currentDegree = pieButtons[i].getDegree();
+                    pieButtons[i].setDegree(currentDegree + (int)delta);
+                
+                }
 		updateButtons();
 	}
 
