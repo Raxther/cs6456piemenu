@@ -96,11 +96,83 @@ public class PieButton extends JComponent implements ChangeListener {
 
 	public void setHierarchyVisible(boolean show) {
 		if (leafNodes > 0) {
-			for (int i = 0; i < hierarchButtons.length; i++) {
-				hierarchButtons[i].setVisible(show);
-			}
+                    if(show == true)
+                    {
+                                for (int i = 0; i < hierarchButtons.length; i++) 
+                                {
+
+                                //Set button visibility based on angles    
+
+                                double diffX = hierarchButtons[i].getX() - this.getX();
+                                double diffY = hierarchButtons[i].getY() - this.getY();
+                                double currentHierarchAngle =  Math.toDegrees(Math.atan2(Math.toRadians(diffX), Math.toRadians(diffY))) - 90;
+                                if(currentHierarchAngle < 0)
+                                {
+                                    currentHierarchAngle = currentHierarchAngle + 360;
+                                }
+                                //First quadrant
+                                if(this.getDegree() >= 0 && this.getDegree() <= 90)
+                                    {
+                                        if((currentHierarchAngle >= 0 && currentHierarchAngle <=90+this.getDegree()) || (currentHierarchAngle >= 270 + this.getDegree() && currentHierarchAngle <=360))
+                                        {
+                                            hierarchButtons[i].setVisible(true);
+                                        }
+                                        else
+                                        {
+                                            hierarchButtons[i].setVisible(false);
+                                        }
+                                    }
+                                //Second quadrant
+                                 else if(this.getDegree() >= 90 && this.getDegree() <= 180)
+                                 {
+                                        if(currentHierarchAngle >= (0 + (this.getDegree()-90)) && currentHierarchAngle <= 180+(this.getDegree()-90))
+                                        {
+                                            hierarchButtons[i].setVisible(true);
+                                        }
+                                        else
+                                        {
+                                            hierarchButtons[i].setVisible(false);
+                                        }
+                                 }
+
+                                 //Third quadrant
+                                 else if(this.getDegree() >= 180 && this.getDegree() <= 270)
+                                 {
+                                        if(currentHierarchAngle >= (0 + (this.getDegree()-90)) && currentHierarchAngle <= 180+(this.getDegree()-90))
+                                        {
+                                            hierarchButtons[i].setVisible(true);
+                                        }
+                                        else
+                                        {
+                                            hierarchButtons[i].setVisible(false);
+                                        }
+                                 }
+
+                                 //Fourth quadrant
+                                 else if(this.getDegree() >= 270 && this.getDegree() <= 360)
+                                 {
+                                         if((currentHierarchAngle >= (this.getDegree() - 90) && currentHierarchAngle <= 360) || (currentHierarchAngle >= 0 && currentHierarchAngle <= (this.getDegree()-270)))
+                                        {
+                                            hierarchButtons[i].setVisible(true);
+                                        }
+                                        else
+                                        {
+                                            hierarchButtons[i].setVisible(false);
+                                        }
+                                 }
+                            }
+                            
+                        
 		}
+                else if (show == false)
+                {
+                        for(int i = 0; i< hierarchButtons.length; i++)
+                        {
+                            hierarchButtons[i].setVisible(show);
+                        }
+                }
 		isExpanded = show;
+                }
 	}
 
 	public boolean isExpanded() {
@@ -111,34 +183,7 @@ public class PieButton extends JComponent implements ChangeListener {
 		if (leafNodes > 0) {
                         
 			double currentHierarchAngle = 0;
-                       /* if(hierarchButtons.length == 2)
-                        {
-                            currentHierarchAngle = -45;
-                        }
-                        else if(hierarchButtons.length == 3)
-                        {
-                            currentHierarchAngle = -60;
-                        }
-                        else if(hierarchButtons.length == 4)
-                        {
-                            currentHierarchAngle = -67.5;
-                        }
-                        else if(hierarchButtons.length == 5)
-                        {
-                            currentHierarchAngle = -71.25;
-                        }
-                        else if(hierarchButtons.length == 6)
-                        {
-                            currentHierarchAngle = -73.125; 
-                        }
-                        else if(hierarchButtons.length == 7)
-                        {
-                            currentHierarchAngle = -74.0625; 
-                        }
-                        else if(hierarchButtons.length == 8)
-                        {
-                            currentHierarchAngle = -74.53125; 
-                        } */
+ 
 			// Position hierarchical buttons
 			for (int y = 0; y < hierarchButtons.length; y++) {
 
