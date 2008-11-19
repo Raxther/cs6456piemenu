@@ -167,23 +167,29 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		int notches = e.getWheelRotation();
-
+		PieMenu pieMenu = (PieMenu) e.getComponent();
 		if (notches < 0) {
 			// Wheel UP:
-			if (((PieMenu) e.getComponent()).innerBoundingBox.contains(e
-					.getPoint())) {
-				((PieMenu) (e.getComponent())).changeInitAngle(10);
+			if (pieMenu.innerBoundingBox.contains(e.getPoint())) {
+				pieMenu.changeInitAngle(10);
 			} else {
-				// rotate hierarchical buttons
+				for (int i = 0; i < pieMenu.getPieButtons().length; i++) {
+					if (pieMenu.getPieButtons()[i].isExpanded()) {
+						// ROTATE the heirarchy of this Button
+					}
+				}
 			}
 
 		} else {
 			// Wheel DOWN:
-			if (((PieMenu) e.getComponent()).innerBoundingBox.contains(e
-					.getPoint())) {
-				((PieMenu) (e.getComponent())).changeInitAngle(-10);
+			if (pieMenu.innerBoundingBox.contains(e.getPoint())) {
+				pieMenu.changeInitAngle(-10);
 			} else {
-				// rotate heirarchical buttons
+				for (int i = 0; i < pieMenu.getPieButtons().length; i++) {
+					if (pieMenu.getPieButtons()[i].isExpanded()) {
+						// ROTATE the heirarchy of this Button
+					}
+				}
 			}
 		}
 	}
