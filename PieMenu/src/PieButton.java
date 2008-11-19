@@ -24,9 +24,11 @@ public class PieButton extends JComponent implements ChangeListener {
 	private int leafNodes;
 	private PieMenu pieMenu;
 	private boolean isExpanded;
+	double currentHierarchAngle;
 
 	public PieButton(PieMenu pie, int nodes) {
 		pieButtonModel = new PieButtonModel();
+		currentHierarchAngle = 0;
 		setModel();
 		buildButton();
 		pieMenu = pie;
@@ -171,7 +173,7 @@ public class PieButton extends JComponent implements ChangeListener {
 	public void updateHierarchy() {
 		if (leafNodes > 0) {
 
-			double currentHierarchAngle = 0;
+			//double currentHierarchAngle = 0;
 
 			// Position hierarchical buttons
 			for (int y = 0; y < hierarchButtons.length; y++) {
@@ -199,6 +201,11 @@ public class PieButton extends JComponent implements ChangeListener {
 				currentHierarchAngle += hierarchSpacing;
 			}
 		}
+	}
+	
+	public void changeHierarchAngle(double delta) {
+		currentHierarchAngle = currentHierarchAngle + delta;
+		updateHierarchy();
 	}
 
 	public void setDegree(int d) {
