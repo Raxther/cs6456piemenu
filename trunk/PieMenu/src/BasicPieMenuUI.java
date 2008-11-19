@@ -176,6 +176,8 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 				for (int i = 0; i < pieMenu.getPieButtons().length; i++) {
 					if (pieMenu.getPieButtons()[i].isExpanded()) {
 						// ROTATE the heirarchy of this Button
+						pieMenu.getPieButtons()[i].changeHierarchAngle(10);
+						pieMenu.getPieButtons()[i].setHierarchyVisible(true);
 					}
 				}
 			}
@@ -188,6 +190,8 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 				for (int i = 0; i < pieMenu.getPieButtons().length; i++) {
 					if (pieMenu.getPieButtons()[i].isExpanded()) {
 						// ROTATE the heirarchy of this Button
+						pieMenu.getPieButtons()[i].changeHierarchAngle(-10);
+						pieMenu.getPieButtons()[i].setHierarchyVisible(true);
 					}
 				}
 			}
