@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -74,17 +75,21 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 	public void paint(Graphics g, JComponent c) {
 		Graphics2D g2 = (Graphics2D) g;
 		((PieMenu) c).updateButtons();
+		((PieMenu) c).innerBoundingBox.setLocation((c.getWidth() / 2)
+				- ((PieMenu) c).getRadius(), (c.getHeight() / 2)
+				- ((PieMenu) c).getRadius());
 		int menuCenterX = (c.getWidth() / 2);
 		int menuCenterY = (c.getHeight() / 2);
-		paintCircle(g2, c, menuCenterX, menuCenterY);
+		paintCircle(g2, c, ((PieMenu) c).innerBoundingBox);
 		((PieMenu) c).updateArcs(menuCenterX, menuCenterY);
 		g2.drawImage(blueButton, menuCenterX - (blueButton.getWidth() / 2),
 				menuCenterY - (blueButton.getHeight() / 2), null);
 	}
 
-	private void paintCircle(Graphics2D g2, JComponent c, int x, int y) {
+	private void paintCircle(Graphics2D g2, JComponent c, Rectangle box) {
 		g2.setColor(Color.LIGHT_GRAY);
-		g2.fillOval(x - 80, y - 80, 160, 160);
+		g2.fillOval((int) box.getX(), (int) box.getY(), ((PieMenu) c)
+				.getDiameter(), ((PieMenu) c).getDiameter());
 		g2.setColor(Color.ORANGE);
 		g2.fill(((PieMenu) c).getArc());
 	}
@@ -162,12 +167,24 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		int notches = e.getWheelRotation();
+
 		if (notches < 0) {
-			//Wheel UP:
-			((PieMenu) (e.getComponent())).changeInitAngle(10);
+			// Wheel UP:
+			if (((PieMenu) e.getComponent()).innerBoundingBox.contains(e
+					.getPoint())) {
+				((PieMenu) (e.getComponent())).changeInitAngle(10);
+			} else {
+				// rotate hierarchical buttons
+			}
+
 		} else {
-			//Wheel DOWN:
-			((PieMenu) (e.getComponent())).changeInitAngle(-10);
+			// Wheel DOWN:
+			if (((PieMenu) e.getComponent()).innerBoundingBox.contains(e
+					.getPoint())) {
+				((PieMenu) (e.getComponent())).changeInitAngle(-10);
+			} else {
+				// rotate heirarchical buttons
+			}
 		}
 	}
 
