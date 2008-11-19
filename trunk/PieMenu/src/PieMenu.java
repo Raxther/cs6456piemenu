@@ -103,11 +103,27 @@ public class PieMenu extends JComponent implements ChangeListener {
 	}
 
 	public void changeInitAngle(double delta) {
+
 		initAngle = initAngle + delta;
 		// Update degree for hierarchical buttons
 		for (int i = 0; i < pieButtons.length; i++) {
+                        
 			int currentDegree = pieButtons[i].getDegree();
-			pieButtons[i].setDegree(currentDegree + (int) delta);
+                        int updatedDegree = currentDegree + (int) delta;
+                        
+                        if(updatedDegree > 360)
+                        {
+                            pieButtons[i].setDegree(updatedDegree - 360);
+                        }
+                        else if(updatedDegree < 0)
+                        {
+                            pieButtons[i].setDegree(updatedDegree + 360);
+                        }
+                        else
+                        {
+                            pieButtons[i].setDegree(updatedDegree);
+                        }
+                            
 
 		}
 		updateButtons();
