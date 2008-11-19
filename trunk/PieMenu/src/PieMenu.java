@@ -124,6 +124,10 @@ public class PieMenu extends JComponent implements ChangeListener {
 	public int getRadius() {
 		return radius;
 	}
+	
+	public PieButton[] getPieButtons() {
+		return pieButtons;
+	}
 
 	public String getUIClassID() {
 		return PieMenuUI.UI_CLASS_ID;
