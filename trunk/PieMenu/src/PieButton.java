@@ -113,10 +113,10 @@ public class PieButton extends JComponent implements ChangeListener {
 						currentHierarchAngle = currentHierarchAngle + 360;
 					}
 					// First quadrant
-					if (this.getDegree() >= 0 && this.getDegree() <= 90) {
-						if ((currentHierarchAngle >= 0 && currentHierarchAngle <= 90 + this
+					if (this.getDegree() >= 0 && this.getDegree() < 90) {
+						if ((currentHierarchAngle >= 0 && currentHierarchAngle <= 91 + this
 								.getDegree())
-								|| (currentHierarchAngle >= 270 + this
+								|| (currentHierarchAngle >= 269 + this
 										.getDegree() && currentHierarchAngle <= 360)) {
 							hierarchButtons[i].setVisible(true);
 						} else {
@@ -124,10 +124,10 @@ public class PieButton extends JComponent implements ChangeListener {
 						}
 					}
 					// Second quadrant
-					else if (this.getDegree() >= 90 && this.getDegree() <= 180) {
-						if (currentHierarchAngle >= (0 + (this.getDegree() - 90))
+					else if (this.getDegree() >= 90 && this.getDegree() < 180) {
+						if (currentHierarchAngle >= (0 + (this.getDegree() - 91))
 								&& currentHierarchAngle <= 180 + (this
-										.getDegree() - 90)) {
+										.getDegree() - 89)) {
 							hierarchButtons[i].setVisible(true);
 						} else {
 							hierarchButtons[i].setVisible(false);
@@ -135,10 +135,10 @@ public class PieButton extends JComponent implements ChangeListener {
 					}
 
 					// Third quadrant
-					else if (this.getDegree() >= 180 && this.getDegree() <= 270) {
-						if (currentHierarchAngle >= (0 + (this.getDegree() - 90))
+					else if (this.getDegree() >= 180 && this.getDegree() < 270) {
+						if (currentHierarchAngle >= (0 + (this.getDegree() - 91))
 								&& currentHierarchAngle <= 180 + (this
-										.getDegree() - 90)) {
+										.getDegree() - 89)) {
 							hierarchButtons[i].setVisible(true);
 						} else {
 							hierarchButtons[i].setVisible(false);
@@ -147,9 +147,9 @@ public class PieButton extends JComponent implements ChangeListener {
 
 					// Fourth quadrant
 					else if (this.getDegree() >= 270 && this.getDegree() <= 360) {
-						if ((currentHierarchAngle >= (this.getDegree() - 90) && currentHierarchAngle <= 360)
+						if ((currentHierarchAngle >= (this.getDegree() - 91) && currentHierarchAngle <= 360)
 								|| (currentHierarchAngle >= 0 && currentHierarchAngle <= (this
-										.getDegree() - 270))) {
+										.getDegree() - 269))) {
 							hierarchButtons[i].setVisible(true);
 						} else {
 							hierarchButtons[i].setVisible(false);
@@ -191,9 +191,9 @@ public class PieButton extends JComponent implements ChangeListener {
 						.getDegree()
 						+ currentHierarchAngle));
 				// Get current offset coordinates
-				double currentHierarchXCoordinate = (20 + (hierarchButtons.length - 4) * 10)
+				double currentHierarchXCoordinate = (25 + (hierarchButtons.length - 3) * 10)
 						* currentHierarchXAngle;
-				double currentHierarchYCoordinate = (20 + (hierarchButtons.length - 4) * 10)
+				double currentHierarchYCoordinate = (25 + (hierarchButtons.length - 3) * 10)
 						* currentHierarchYAngle;
 				hierarchButtons[y].setBounds(parentButtonX
 						+ (int) currentHierarchXCoordinate, parentButtonY
