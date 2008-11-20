@@ -31,7 +31,7 @@ public class TestApp extends JFrame {
 	public TestApp() {
 		super();
 		getContentPane().setLayout(new BorderLayout());
-		setBounds(100, 100, 500, 375);
+		setBounds(100, 100, 500, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		UIManager.put(PieMenuUI.UI_CLASS_ID, "BasicPieMenuUI");
 		UIManager.put(PieButtonUI.UI_CLASS_ID, "BasicPieButtonUI");
