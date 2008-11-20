@@ -36,7 +36,7 @@ public class PieMenu extends JComponent implements ChangeListener {
 		pieMenuModel = new PieMenuModel();
 		setModel();
 		arc = new Arc2D.Float(Arc2D.PIE); // ARC
-		updateArcs(this.getWidth() / 2, this.getHeight() / 2);
+		// updateArcs();
 		diameter = 160;
 		radius = diameter / 2;
 		innerBoundingBox = new Rectangle(this.getWidth() / 2 - diameter / 2,
@@ -78,8 +78,14 @@ public class PieMenu extends JComponent implements ChangeListener {
 			// Position buttons around circle
 			pieButtons[i].setBounds(centerX + (int) currentXCoordinate, centerY
 					- (int) currentYCoordinate, 44, 44);
+			// Update arcs:
+			if (i == 0) {
+				updateArcs(initAngle - (angularSpacing / 2), angularSpacing);
+			}
+
 			initAngle += angularSpacing;
 			pieButtons[i].updateHierarchy();
+
 		}
 
 	}
@@ -92,10 +98,12 @@ public class PieMenu extends JComponent implements ChangeListener {
 		}
 	}
 
-	public void updateArcs(int x, int y) {
+	public void updateArcs(double initAngle, double extent) {
+		int x = this.getWidth() / 2;
+		int y = this.getHeight() / 2;
 		arc.setFrame(x - 80, y - 80, 160, 160);
-		arc.setAngleStart(0);
-		arc.setAngleExtent(45);
+		arc.setAngleStart(initAngle);
+		arc.setAngleExtent(extent);
 	}
 
 	public Arc2D.Float getArc() {
@@ -107,23 +115,17 @@ public class PieMenu extends JComponent implements ChangeListener {
 		initAngle = initAngle + delta;
 		// Update degree for hierarchical buttons
 		for (int i = 0; i < pieButtons.length; i++) {
-                        
+
 			int currentDegree = pieButtons[i].getDegree();
-                        int updatedDegree = currentDegree + (int) delta;
-                        
-                        if(updatedDegree > 360)
-                        {
-                            pieButtons[i].setDegree(updatedDegree - 360);
-                        }
-                        else if(updatedDegree < 0)
-                        {
-                            pieButtons[i].setDegree(updatedDegree + 360);
-                        }
-                        else
-                        {
-                            pieButtons[i].setDegree(updatedDegree);
-                        }
-                            
+			int updatedDegree = currentDegree + (int) delta;
+
+			if (updatedDegree > 360) {
+				pieButtons[i].setDegree(updatedDegree - 360);
+			} else if (updatedDegree < 0) {
+				pieButtons[i].setDegree(updatedDegree + 360);
+			} else {
+				pieButtons[i].setDegree(updatedDegree);
+			}
 
 		}
 		updateButtons();
@@ -140,7 +142,7 @@ public class PieMenu extends JComponent implements ChangeListener {
 	public int getRadius() {
 		return radius;
 	}
-	
+
 	public PieButton[] getPieButtons() {
 		return pieButtons;
 	}

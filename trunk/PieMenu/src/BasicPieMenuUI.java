@@ -83,7 +83,7 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 		int menuCenterY = (c.getHeight() / 2);
 		paintCircle(g2, c, ((PieMenu) c).innerBoundingBox);
                 paintLines(g2,c);
-		((PieMenu) c).updateArcs(menuCenterX, menuCenterY);
+		//((PieMenu) c).updateArcs();
 		g2.drawImage(blueButton, menuCenterX - (blueButton.getWidth() / 2),
 				menuCenterY - (blueButton.getHeight() / 2), null);
 	}
