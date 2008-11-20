@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -81,6 +82,7 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 		int menuCenterX = (c.getWidth() / 2);
 		int menuCenterY = (c.getHeight() / 2);
 		paintCircle(g2, c, ((PieMenu) c).innerBoundingBox);
+                paintLines(g2,c);
 		((PieMenu) c).updateArcs(menuCenterX, menuCenterY);
 		g2.drawImage(blueButton, menuCenterX - (blueButton.getWidth() / 2),
 				menuCenterY - (blueButton.getHeight() / 2), null);
@@ -93,7 +95,32 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 		g2.setColor(Color.ORANGE);
 		g2.fill(((PieMenu) c).getArc());
 	}
+    
+        //Method for painting lines from parent button to hierarchical children
+       private void paintLines(Graphics2D g2, JComponent c) {
+           g2.setColor(Color.darkGray);
+           //Set anti-aliasing
+           RenderingHints rh = g2.getRenderingHints();
+           rh.put(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+           g2.setRenderingHints (rh);
+           
+           for(int i = 0; i < ((PieMenu)c).getPieButtons().length; i++)
+           {
+               //22 pixel offset for current buttons
+               int currentPieButtonX = ((PieMenu)c).getPieButtons()[i].getX() + 22;
+               int currentPieButtonY = ((PieMenu)c).getPieButtons()[i].getY() + 22;
+               for(int y = 0; y < ((PieMenu)c).getPieButtons()[i].hierarchButtons.length; y++)
+               {
+                   //Draw lines only if visible
+                   if(((PieMenu)c).getPieButtons()[i].hierarchButtons[y].isVisible() == true)
+                   {
+                       //Draw line w/ 22 pixel offset for each button..
+                       g2.drawLine(currentPieButtonX, currentPieButtonY, ((PieMenu)c).getPieButtons()[i].hierarchButtons[y].getX() + 22, ((PieMenu)c).getPieButtons()[i].hierarchButtons[y].getY() + 22);
+                   }
+               }
+           }
 
+	}
 	private void createImages() {
 		String filename = "resources/blue_button.png";
 		try {
@@ -176,7 +203,7 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 				for (int i = 0; i < pieMenu.getPieButtons().length; i++) {
 					if (pieMenu.getPieButtons()[i].isExpanded()) {
 						// ROTATE the heirarchy of this Button
-						pieMenu.getPieButtons()[i].changeHierarchAngle(10);
+						pieMenu.getPieButtons()[i].changeHierarchAngle(5);
 						pieMenu.getPieButtons()[i].setHierarchyVisible(true);
 					}
 				}
@@ -190,7 +217,7 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 				for (int i = 0; i < pieMenu.getPieButtons().length; i++) {
 					if (pieMenu.getPieButtons()[i].isExpanded()) {
 						// ROTATE the heirarchy of this Button
-						pieMenu.getPieButtons()[i].changeHierarchAngle(-10);
+						pieMenu.getPieButtons()[i].changeHierarchAngle(-5);
 						pieMenu.getPieButtons()[i].setHierarchyVisible(true);
 					}
 				}
