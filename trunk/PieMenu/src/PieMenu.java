@@ -19,24 +19,22 @@ import javax.swing.event.ChangeListener;
  * 
  */
 public class PieMenu extends JComponent implements ChangeListener {
-
+	public static final int numOfButtons = 8;
 	private PieMenuModel pieMenuModel;
-	private PieButton[] pieButtons = new PieButton[8];
+	private PieButton[] pieButtons = new PieButton[numOfButtons];
+	private Arc2D.Float[] pieButtonsArcs = new Arc2D.Float[numOfButtons];
 	private Timer buttonsTimer;
 	private double initAngle;
 	private int diameter;
 	private int radius;
 	public Rectangle innerBoundingBox;
 
-	private Arc2D.Float arc;
-
 	public PieMenu() {
 		buttonsTimer = new Timer(50, new ButtonsAnimListener());
 		initAngle = 0;
 		pieMenuModel = new PieMenuModel();
 		setModel();
-		arc = new Arc2D.Float(Arc2D.PIE); // ARC
-		// updateArcs();
+		buildPieButtonsArcs();
 		diameter = 160;
 		radius = diameter / 2;
 		innerBoundingBox = new Rectangle(this.getWidth() / 2 - diameter / 2,
@@ -61,6 +59,12 @@ public class PieMenu extends JComponent implements ChangeListener {
 		updateButtons();
 	}
 
+	private void buildPieButtonsArcs() {
+		for (int i = 0; i < pieButtonsArcs.length; i++) {
+			pieButtonsArcs[i] = new Arc2D.Float(Arc2D.PIE);
+		}
+	}
+
 	public void updateButtons() {
 		double angularSpacing = (double) 360 / (double) pieButtons.length;
 
@@ -78,16 +82,17 @@ public class PieMenu extends JComponent implements ChangeListener {
 			// Position buttons around circle
 			pieButtons[i].setBounds(centerX + (int) currentXCoordinate, centerY
 					- (int) currentYCoordinate, 44, 44);
+
 			// Update arcs:
-			if (i == 0) {
-				updateArcs(initAngle - (angularSpacing / 2), angularSpacing);
-			}
+			int x = this.getWidth() / 2;
+			int y = this.getHeight() / 2;
+			pieButtonsArcs[i].setFrame(x - 80, y - 80, 160, 160);
+			pieButtonsArcs[i].setAngleStart(initAngle - (angularSpacing / 2));
+			pieButtonsArcs[i].setAngleExtent(angularSpacing);
 
 			initAngle += angularSpacing;
 			pieButtons[i].updateHierarchy();
-
 		}
-
 	}
 
 	public void setHierarchyHidden() {
@@ -96,18 +101,6 @@ public class PieMenu extends JComponent implements ChangeListener {
 				pieButtons[i].setHierarchyVisible(false);
 			}
 		}
-	}
-
-	public void updateArcs(double initAngle, double extent) {
-		int x = this.getWidth() / 2;
-		int y = this.getHeight() / 2;
-		arc.setFrame(x - 80, y - 80, 160, 160);
-		arc.setAngleStart(initAngle);
-		arc.setAngleExtent(extent);
-	}
-
-	public Arc2D.Float getArc() {
-		return arc;
 	}
 
 	public void changeInitAngle(double delta) {
@@ -145,6 +138,10 @@ public class PieMenu extends JComponent implements ChangeListener {
 
 	public PieButton[] getPieButtons() {
 		return pieButtons;
+	}
+
+	public Arc2D.Float[] getPieButtonsArcs() {
+		return pieButtonsArcs;
 	}
 
 	public String getUIClassID() {
