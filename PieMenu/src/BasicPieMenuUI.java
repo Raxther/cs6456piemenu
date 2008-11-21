@@ -81,7 +81,7 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 		rh.put(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHints(rh);
-			
+
 		((PieMenu) c).updateButtons();
 		((PieMenu) c).innerBoundingBox.setLocation((c.getWidth() / 2)
 				- ((PieMenu) c).getRadius(), (c.getHeight() / 2)
@@ -184,10 +184,15 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		/*
-		 * if (((PieMenu) (e.getComponent())).getArc().contains(e.getPoint())) {
-		 * System.out.println("Arc test"); }
-		 */
+		Arc2D arc[] = ((PieMenu) e.getComponent()).getPieButtonsArcs();
+		PieButton[] pieButton = ((PieMenu) e.getComponent()).getPieButtons();
+		for (int i = 0; i < arc.length; i++) {
+			if (arc[i].contains(e.getPoint())) {
+				pieButton[i].setRollover(true);
+			} else {
+				pieButton[i].setRollover(false);
+			}
+		}
 	}
 
 	@Override
