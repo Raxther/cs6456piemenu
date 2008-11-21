@@ -262,6 +262,9 @@ public class PieButton extends JComponent implements ChangeListener {
 		public void actionPerformed(final ActionEvent e) {
 			pieMenu.setHierarchyHidden();
 			setHierarchyVisible(true);
+			if (isExpanded) {
+				setHierarchyVisible(false);
+			}
 		}
 	}
 
