@@ -25,10 +25,12 @@ public class PieButton extends JComponent implements ChangeListener {
 	private PieMenu pieMenu;
 	private boolean isExpanded;
 	double currentHierarchAngle;
+	boolean isRollover;
 
 	public PieButton(PieMenu pie, int nodes) {
 		pieButtonModel = new PieButtonModel();
 		currentHierarchAngle = 0;
+		isRollover = false;
 		setModel();
 		buildButton();
 		pieMenu = pie;
@@ -218,6 +220,11 @@ public class PieButton extends JComponent implements ChangeListener {
 	
 	public void setRollover(boolean b) {
 		mainButton.getModel().setRollover(b);
+		isRollover = b;
+	}
+
+	public boolean isRollover() {
+		return isRollover;
 	}
 
 	@Override
@@ -231,5 +238,6 @@ public class PieButton extends JComponent implements ChangeListener {
 			setHierarchyVisible(true);
 		}
 	}
+
 
 }

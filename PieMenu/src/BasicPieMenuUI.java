@@ -165,9 +165,14 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
+	public void mousePressed(MouseEvent e) {
+		PieButton[] pieButton = ((PieMenu) e.getComponent()).getPieButtons();
+		((PieMenu) e.getComponent()).setHierarchyHidden();
+		for (int i = 0; i < pieButton.length; i++) {
+			if (pieButton[i].isRollover()) {
+				pieButton[i].setHierarchyVisible(true);
+			}
+		}
 	}
 
 	@Override
