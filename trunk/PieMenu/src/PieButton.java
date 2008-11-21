@@ -3,6 +3,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -24,22 +25,31 @@ public class PieButton extends JComponent implements ChangeListener {
 	private int leafNodes;
 	private PieMenu pieMenu;
 	private boolean isExpanded;
+	private boolean isExpanding;
+	private boolean isContracting;
 	double currentHierarchAngle;
 	boolean isRollover;
+	private double hierarchyRadius;
+	private Timer hierarchyTimer;
 
 	public PieButton(PieMenu pie, int nodes) {
 		pieButtonModel = new PieButtonModel();
+		hierarchyTimer = new Timer(10, new HierarchyAnimListener());
 		currentHierarchAngle = 0;
+		hierarchyRadius = 0;
 		isRollover = false;
 		setModel();
 		buildButton();
 		pieMenu = pie;
 		leafNodes = nodes;
 		isExpanded = false;
+		isExpanding = false;
+		isContracting = false;
+
 		if (leafNodes > 0) {
 			addHierarchButtons(leafNodes);
 		}
-		setHierarchyVisible(false);
+		this.hideHierarchyButtons();
 		updateUI();
 	}
 
@@ -100,9 +110,16 @@ public class PieButton extends JComponent implements ChangeListener {
 	}
 
 	public void setHierarchyVisible(boolean show) {
+
 		if (leafNodes > 0) {
 			if (show == true) {
-				isExpanded = true;
+				isExpanding = true;
+				if (!isExpanded) {
+					isContracting = false;
+					hierarchyTimer.start();
+				}
+
+				// isExpanded = true;
 				for (int i = 0; i < hierarchButtons.length; i++) {
 
 					// Set button visibility based on angles
@@ -160,12 +177,20 @@ public class PieButton extends JComponent implements ChangeListener {
 				}
 
 			} else if (show == false) {
-				for (int i = 0; i < hierarchButtons.length; i++) {
-					hierarchButtons[i].setVisible(show);
+				isExpanding = false;
+				if (isExpanded) {
+					hierarchyTimer.start();
+					isContracting = true;
 				}
-				isExpanded = false;
 			}
 		}
+	}
+
+	private void hideHierarchyButtons() {
+		for (int i = 0; i < hierarchButtons.length; i++) {
+			hierarchButtons[i].setVisible(false);
+		}
+		isExpanded = false;
 	}
 
 	public boolean isExpanded() {
@@ -192,9 +217,11 @@ public class PieButton extends JComponent implements ChangeListener {
 						.getDegree()
 						+ currentHierarchAngle));
 				// Get current offset coordinates
-				double currentHierarchXCoordinate = (25 + (hierarchButtons.length - 3) * 10)
+				double currentHierarchXCoordinate = (25 + (hierarchButtons.length - 3)
+						* hierarchyRadius)
 						* currentHierarchXAngle;
-				double currentHierarchYCoordinate = (25 + (hierarchButtons.length - 3) * 10)
+				double currentHierarchYCoordinate = (25 + (hierarchButtons.length - 3)
+						* hierarchyRadius)
 						* currentHierarchYAngle;
 				hierarchButtons[y].setBounds(parentButtonX
 						+ (int) currentHierarchXCoordinate, parentButtonY
@@ -235,6 +262,31 @@ public class PieButton extends JComponent implements ChangeListener {
 		public void actionPerformed(final ActionEvent e) {
 			pieMenu.setHierarchyHidden();
 			setHierarchyVisible(true);
+		}
+	}
+
+	private class HierarchyAnimListener implements ActionListener {
+
+		public void actionPerformed(final ActionEvent e) {
+			if (isExpanding) {
+				hierarchyRadius += 1.0;
+				updateHierarchy();
+				if (hierarchyRadius >= 10) {
+					hierarchyTimer.stop();
+					isExpanded = true;
+					isExpanding = false;
+				}
+			}
+			if (isContracting) {
+				hierarchyRadius -= 1.0;
+				updateHierarchy();
+				if (hierarchyRadius <= 0) {
+					hierarchyTimer.stop();
+					isContracting = false;
+					isExpanded = false;
+					hideHierarchyButtons();
+				}
+			}
 		}
 	}
 
