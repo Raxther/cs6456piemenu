@@ -172,6 +172,9 @@ public class BasicPieMenuUI extends PieMenuUI implements MouseListener,
 			if (pieButton[i].isRollover()) {
 				pieButton[i].setHierarchyVisible(true);
 			}
+			if (pieButton[i].isExpanded()) {
+				pieButton[i].setHierarchyVisible(false);
+			}
 		}
 	}
 
