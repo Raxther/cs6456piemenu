@@ -97,9 +97,9 @@ public class PieButton extends JComponent implements ChangeListener {
 		for (int i = 0; i < hierarchButtons.length; i++) {
 			JButton hierarchButton = new JButton();
 			hierarchButton.setIcon(new ImageIcon(getClass().getResource(
-					"resources/dark_blue_button.png")));
+					"resources/subButtonBlue_" + i + ".png")));
 			hierarchButton.setRolloverIcon(new ImageIcon(getClass()
-					.getResource("resources/yellow_button.png")));
+					.getResource("resources/subButtonYellow_" + i + ".png")));
 			hierarchButton.setFocusPainted(false);
 			hierarchButton.setContentAreaFilled(false);
 			hierarchButton.setBorderPainted(false);
