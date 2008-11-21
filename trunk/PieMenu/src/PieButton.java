@@ -215,6 +215,10 @@ public class PieButton extends JComponent implements ChangeListener {
 	public int getDegree() {
 		return (degree);
 	}
+	
+	public void setRollover(boolean b) {
+		mainButton.getModel().setRollover(b);
+	}
 
 	@Override
 	public void stateChanged(ChangeEvent arg0) {
