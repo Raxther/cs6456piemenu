@@ -174,8 +174,7 @@ public class PieButton extends JComponent implements ChangeListener {
 
 	public void updateHierarchy() {
 		if (leafNodes > 0) {
-
-			//double currentHierarchAngle = 0;
+			// double currentHierarchAngle = 0;
 
 			// Position hierarchical buttons
 			for (int y = 0; y < hierarchButtons.length; y++) {
@@ -204,7 +203,7 @@ public class PieButton extends JComponent implements ChangeListener {
 			}
 		}
 	}
-	
+
 	public void changeHierarchAngle(double delta) {
 		currentHierarchAngle = currentHierarchAngle + delta;
 		updateHierarchy();
@@ -217,7 +216,7 @@ public class PieButton extends JComponent implements ChangeListener {
 	public int getDegree() {
 		return (degree);
 	}
-	
+
 	public void setRollover(boolean b) {
 		mainButton.getModel().setRollover(b);
 		isRollover = b;
@@ -238,6 +237,5 @@ public class PieButton extends JComponent implements ChangeListener {
 			setHierarchyVisible(true);
 		}
 	}
-
 
 }
